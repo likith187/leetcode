@@ -1,9 +1,5 @@
 package dp;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 public class P152_Maximum_Product_Subarray_Optimized {
 	public int maxProduct(int[] nums) {
 		int max = Integer.MIN_VALUE;
@@ -28,6 +24,6 @@ public class P152_Maximum_Product_Subarray_Optimized {
 
 	public static void main(String[] args) {
 		var v = new P152_Maximum_Product_Subarray_Optimized();
-		System.out.println(v.maxProduct(new int[] {2,3,-2,4}));
+		System.out.println(v.maxProduct(new int[] {0,10,10,10,10,10,10,10,10,10,-10,10,10,10,10,10,10,10,10,10,0}));
 	}
 }
