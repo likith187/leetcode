@@ -3,7 +3,7 @@ package arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class P395_Longest_Substring_With_Atleast_K {
+public class P0395_Longest_Substring_With_Atleast_K {
 	public int longestSubstring(String s, int k) {
 		int res = 0;
 		for (int i = 1; i <= 26; i++) {
@@ -27,7 +27,7 @@ public class P395_Longest_Substring_With_Atleast_K {
 		return res;
 	}
 	public static void main(String[] args) {
-		var obj = new P395_Longest_Substring_With_Atleast_K();
+		var obj = new P0395_Longest_Substring_With_Atleast_K();
 		System.out.println(obj.longestSubstring("aaabb", 3));
 	}
 }

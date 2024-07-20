@@ -39,15 +39,13 @@ import java.util.Map;
 public class P0003_Longest_Substring_Without_Repeating {
 	
 	public int lengthOfLongestSubstring(String s) {
-		int res = 0, i = -1;
+		int res = 0, idx = -1;
 		Map<Character, Integer> mp = new HashMap<>();
 		for (int j = 0; j < s.length(); j++) {
 			char c = s.charAt( j );
-			if (mp.containsKey( c )) {
-				i = Math.max( mp.get( c ), i );
-			}
-			res = Math.max( res, j - i );
-			mp.put( c, j );
+			idx = Math.max( mp.getOrDefault( c, 0 ), idx );
+			res = Math.max( res, j - idx + 1 );
+			mp.put( c, j + 1 );
 		}
 		return res;
 	}
