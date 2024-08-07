@@ -1,41 +1,45 @@
 package threading;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        List<Thread> threads = new ArrayList<>();
-        for(int i = 0; i < 1000; i++) {
-            threads.add(new Thread(Test::getInstance));
-        }
-        for(Thread t: threads) {
-            t.start();
-        }
-        for(Thread t: threads) {
-            t.join();
-        }
-        new Test().test();
+        Thread t1 = new Thread(new Test(0, 3));
+        Thread t2 = new Thread(new Test(1, 3));
+        Thread t3 = new Thread(new Test(2, 3));
+        t1.start();
+        t2.start();
+        t3.start();
+        t1.join();
+        t2.join();
+        t3.join();
     }
 
-    public static class Test {
-        static int instance = 0;
-        Test() {
-            System.out.println(Math.random());
-        }
-        public static int getInstance() {
-            if (instance != instance) {
-                throw new AssertionError("as deep shit");
-            }
-            return instance++;
-        }
-        public void test() {
+    public static class Test implements Runnable {
+        public static int counter = 0;
+        public static final Object o = new Object();
 
-            synchronized (this) {
+        public final int threadNumber;
+        public final int totalThreads;
 
-                synchronized (this) {
-                    System.out.println("test");
+        public Test(int threadNumber, int totalThreads) {
+            this.threadNumber = threadNumber;
+            this.totalThreads = totalThreads;
+        }
+
+        @Override
+        public void run() {
+            try {
+                while (counter <= 10) {
+                    synchronized (o) {
+                        while (counter % totalThreads != threadNumber) {
+                            o.wait();
+                        }
+                        System.out.println(counter +" "+ Thread.currentThread().getName());
+                        counter++;
+                        o.notifyAll();
+                    }
                 }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
